@@ -6,23 +6,31 @@
     <title>Guessing Game</title>
     <style>
         body{
-            font-family: sans-serif;
-            color: indigo;
+            font-family: fantasy;
+            color: whitesmoke;
+            text-align: center;
+            background: darkslategrey;
         }
 
         button{
-            background: ghostwhite;
+            background: none;
             color: inherit;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 35px;
             transition: 0.5s;
+            font-size: 30px;
+            text-decoration: underline;
+            font-family: fantasy;
             /*animation: spin 1s infinite linear; */
         }
 
         button:hover {
-            background: lavender;
-            scale: 1.1;
-            padding: 8px 20px;
+            scale: 1.4;
+            padding: 8px 35px;
+        }
+
+        h1{
+            font-size: 50px;
         }
 
         /* @keyframes spin {
@@ -35,57 +43,202 @@
         } */
 
         #scoreboard{
-            font-size: 40px;
-            background:lavender ;
+            font-size: 60px;
+            background:none ;
             width: fit-content;
             padding: 8px 16px;
             position: fixed;
-            top: 5px;
-            right: 5px;
+            top: 30px;
+            right: 100px;
+            text-decoration: underline;
+        }
+
+        .question{
+            padding-top: 20;
+            font-size: 25px;
+        }
+
+        #grade{
+            font-size: 35px;
+        }
+
+        #current{
+            font-size: 35px;
         }
     </style>
 </head>
 <body>
-    <h1>My Awesome Quiz</h1>
+    <h1>Are you smarter than a 5th grader? 🍎</h1>
+
+    <h2 id="end">Current grade:</h2>
+    <!-- <h2 id="current" show>Current Grade Level:</h2> -->
+    <h2 id="grade">Kindergarten</h2>
 
     <div class="question">
-    <h2>How should you NOT refer to JavaScript?</h2>
+    <h2>What is the sum of the angles in a triangle?</h2>
 
-    <button onclick="check(this)">JS</button>
-    <button onclick="check(this)">VanillaJS</button>
-    <button onclick="check(this)" class="correct">Java</button>
+    <button onclick="check(this)">90°</button>
+    <button onclick="check(this)">360°</button>
+    <button onclick="check(this)" class="correct">180°</button>
+    <button onclick="check(this)">270°</button>
     </div>
 
-    <div class="question">
-    <h2>What does the "C" in CSS stand for?</h2>
+    <div class="question" hidden>
+    <h2>What is the square root of 144?</h2>
 
-    <button onclick="check(this)" class="correct">Cascading</button>
-    <button onclick="check(this)">Cat</button>
-    <button onclick="check(this)">Cake</button>
+    <button onclick="check(this)" class="correct">12</button>
+    <button onclick="check(this)">13</button>
+    <button onclick="check(this)">14</button>
+    <button onclick="check(this)">15</button>
+    </div>
+
+    <div class="question" hidden>
+    <h2>What is the capital of France?</h2>
+    
+        <button onclick="check(this)">London</button>
+        <button onclick="check(this)" class="correct">Paris</button>
+        <button onclick="check(this)">Rome</button>
+        <button onclick="check(this)">Madrid</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>Which U.S. state is the largest by area?</h2>
+    
+        <button onclick="check(this)">Texas</button>
+        <button onclick="check(this)">California</button>
+        <button onclick="check(this)">Montana</button>
+        <button onclick="check(this)" class="correct">Alaska</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>Which continent is home to the Amazon Rainforest?</h2>
+    
+        <button onclick="check(this)">Africa</button>
+        <button onclick="check(this)" class="correct">South America</button>
+        <button onclick="check(this)">Asia</button>
+        <button onclick="check(this)">Australia</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>What gas do plants absorb from the air?</h2>
+    
+        <button onclick="check(this)">Oxygen</button>
+        <button onclick="check(this)">Hydrogen</button>
+        <button onclick="check(this)">Nitrogen</button>
+        <button onclick="check(this)" class="correct">Carbon Dioxide</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>What planet is closest to the Sun?</h2>
+    
+        <button onclick="check(this)" class="correct">Mercury</button>
+        <button onclick="check(this)">Venus</button>
+        <button onclick="check(this)">Mars</button>
+        <button onclick="check(this)">Saturn</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>What type of word is "quickly" in the sentence "She quickly ran home"?</h2>
+    
+        <button onclick="check(this)">Noun</button>
+        <button onclick="check(this)">Verb</button>
+        <button onclick="check(this)" class="correct">Adverb</button>
+        <button onclick="check(this)">Adjective</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>What is the subject in this sentence: "The cat chased the mouse"</h2>
+    
+        <button onclick="check(this)">chased</button>
+        <button onclick="check(this)" class="correct">The cat</button>
+        <button onclick="check(this)">the mouse</button>
+        <button onclick="check(this)">the</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>Who wrote the Declaration of Independence?</h2>
+    
+        <button onclick="check(this)">Benjamin Franklin</button>
+        <button onclick="check(this)">George Washington</button>
+        <button onclick="check(this)">John Adams</button>
+        <button onclick="check(this)" class="correct">Thomas Jefferson</button>
     </div>
 
     <div id="scoreboard">0</div>
 
     <script>
+        //current.hidden = false  
         function check(button){
 
             let question = button.closest(".question");
             let buttons = question.querySelectorAll("button");
 
+            setTimeout(showNextQuestion, 1500);
+
             for(let button of buttons){
                 button.disabled = true;
+                if (button.classList.contains("correct")){
+                    button.style.color = "green"
+                }
             }
 
             if(button.classList.contains("correct")){
-                button.style.background = "turquoise"
                 scoreboard.textContent++;
             } else{
-                button.style.background = "deeppink"
-                button.style.color = "white"
+                button.style.color = "red"
+                //button.style.color = "white"
+            } 
+
+            if (scoreboard.textContent <= 2){
+                grade.textContent = "Kindergarten"
+            }else if(scoreboard.textContent <= 4){
+                grade.textContent = "First Grade"
+            }else if(scoreboard.textContent <= 6){
+                grade.textContent = "Second Grade"
+            }else if(scoreboard.textContent <= 8){
+                grade.textContent = "Third Grade"
+            }else if(scoreboard.textContent <= 9){
+                grade.textContent = "Fourth Grade"
+            }else{
+                grade.textContent = "Fifth Grade"
             }
-            
+
         }
 
+        let current = 0;
+        let questions = document.querySelectorAll(".question");
+
+        function showNextQuestion(){  
+            console.log(questions.length);
+            //end.hidden = true;
+
+            questions[current].hidden = true
+            current++;
+            
+            if(questions.length == current){
+                end.textContent = "Quiz complete! Your grade: "
+
+            if (scoreboard.textContent <= 2){
+                grade.textContent = "Kindergarten...maybe you miss clicked..."
+            }else if(scoreboard.textContent <= 4){
+                grade.textContent = "First Grade...try again?"
+            }else if(scoreboard.textContent <= 6){
+                grade.textContent = "Second Grade...study some more."
+            }else if(scoreboard.textContent <= 8){
+                grade.textContent = "Third Grade, great try."
+            }else if(scoreboard.textContent <= 9){
+                grade.textContent = "Fourth Grade, not bad!"
+            }else{
+                grade.textContent = "Fifth Grade! You are smarter than a fifth grader!"
+            }
+                //current.show = false
+                return;
+            }
+            
+            questions[current].hidden = false
+        }
+
+        
     </script>
 </body>
 </html>
