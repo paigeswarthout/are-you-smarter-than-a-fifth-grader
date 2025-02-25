@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guessing Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     <style>
         body{
-            font-family: fantasy;
+            font-family: "Gloria Hallelujah", serif;
             color: whitesmoke;
             text-align: center;
             background: darkslategrey;
-        }
+            
+            }
+            html{
+                border: 20px, solid tan;
+                height: 100%;
+                box-sizing: border-box;
+            }
 
         button{
             background: none;
@@ -18,9 +27,9 @@
             border: none;
             padding: 8px 35px;
             transition: 0.5s;
-            font-size: 30px;
+            font-size: 25px;
             text-decoration: underline;
-            font-family: fantasy;
+            font-family: "Gloria Hallelujah", serif;
             /*animation: spin 1s infinite linear; */
         }
 
@@ -49,7 +58,7 @@
             padding: 8px 16px;
             position: fixed;
             top: 30px;
-            right: 100px;
+            right: 70px;
             text-decoration: underline;
         }
 
@@ -65,16 +74,111 @@
         #current{
             font-size: 35px;
         }
+        #restart{
+            background: white;
+            width: fit-content;
+            text-align: center;
+            /* display: flex;
+            justify-content: center; */
+            margin: 0 auto;
+        }
+        a{
+            text-decoration: none;
+            color: darkslategrey; 
+        }
+
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: darkslategrey;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #start-screen h1 {
+            font-size: 50px;
+        }
+        
+        #start-screen button {
+            background: white;
+            color: darkslategrey;
+            padding: 15px 30px;
+            font-size: 25px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: "Gloria Hallelujah", serif;
+        }
+        
+        #start-screen button:hover {
+            scale: 1.2;
+        }
+        
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Are you smarter than a 5th grader? 🍎</h1>
+    <audio id="school-bell" src="audio/school-bell-199584.mp3"></audio>
+
+    <div id="start-screen">
+        <h1>Are you smarter than a 5th grader? 🍎</h1>
+        <button onclick="startQuiz()">Start</button>
+    </div>
+    <div id="quiz-content" class="hidden">
+        <h1>Are you smarter than a 5th grader? 🍎</h1>
+        <h2 id="end">Current grade:</h2>
+        <h2 id="grade">Kindergarten</h2>
+
+    <!-- <h1>Are you smarter than a 5th grader? 🍎</h1>
 
     <h2 id="end">Current grade:</h2>
-    <!-- <h2 id="current" show>Current Grade Level:</h2> -->
-    <h2 id="grade">Kindergarten</h2>
+   
+    <h2 id="grade">Kindergarten</h2> -->
 
     <div class="question">
+        <h2>What planet is closest to the Sun?</h2>
+    
+        <button onclick="check(this)" class="correct">Mercury</button>
+        <button onclick="check(this)">Venus</button>
+        <button onclick="check(this)">Mars</button>
+        <button onclick="check(this)">Saturn</button>
+    </div>
+
+    <div class="question" hidden>
+        <h2>What is the capital of France?</h2>
+        
+            <button onclick="check(this)">London</button>
+            <button onclick="check(this)" class="correct">Paris</button>
+            <button onclick="check(this)">Rome</button>
+            <button onclick="check(this)">Madrid</button>
+    </div>
+
+        <div class="question" hidden>
+            <h2>Which U.S. state is the largest by area?</h2>
+        
+            <button onclick="check(this)">Texas</button>
+            <button onclick="check(this)">California</button>
+            <button onclick="check(this)">Montana</button>
+            <button onclick="check(this)" class="correct">Alaska</button>
+        </div>
+
+        <div class="question" hidden>
+            <h2>Which continent is home to the Amazon Rainforest?</h2>
+        
+            <button onclick="check(this)">Africa</button>
+            <button onclick="check(this)" class="correct">South America</button>
+            <button onclick="check(this)">Asia</button>
+            <button onclick="check(this)">Australia</button>
+        </div>
+
+    <div class="question" hidden>
     <h2>What is the sum of the angles in a triangle?</h2>
 
     <button onclick="check(this)">90°</button>
@@ -93,33 +197,6 @@
     </div>
 
     <div class="question" hidden>
-    <h2>What is the capital of France?</h2>
-    
-        <button onclick="check(this)">London</button>
-        <button onclick="check(this)" class="correct">Paris</button>
-        <button onclick="check(this)">Rome</button>
-        <button onclick="check(this)">Madrid</button>
-    </div>
-
-    <div class="question" hidden>
-        <h2>Which U.S. state is the largest by area?</h2>
-    
-        <button onclick="check(this)">Texas</button>
-        <button onclick="check(this)">California</button>
-        <button onclick="check(this)">Montana</button>
-        <button onclick="check(this)" class="correct">Alaska</button>
-    </div>
-
-    <div class="question" hidden>
-        <h2>Which continent is home to the Amazon Rainforest?</h2>
-    
-        <button onclick="check(this)">Africa</button>
-        <button onclick="check(this)" class="correct">South America</button>
-        <button onclick="check(this)">Asia</button>
-        <button onclick="check(this)">Australia</button>
-    </div>
-
-    <div class="question" hidden>
         <h2>What gas do plants absorb from the air?</h2>
     
         <button onclick="check(this)">Oxygen</button>
@@ -129,12 +206,12 @@
     </div>
 
     <div class="question" hidden>
-        <h2>What planet is closest to the Sun?</h2>
+        <h2>Who wrote the Declaration of Independence?</h2>
     
-        <button onclick="check(this)" class="correct">Mercury</button>
-        <button onclick="check(this)">Venus</button>
-        <button onclick="check(this)">Mars</button>
-        <button onclick="check(this)">Saturn</button>
+        <button onclick="check(this)">Benjamin Franklin</button>
+        <button onclick="check(this)">George Washington</button>
+        <button onclick="check(this)">John Adams</button>
+        <button onclick="check(this)" class="correct">Thomas Jefferson</button>
     </div>
 
     <div class="question" hidden>
@@ -155,19 +232,24 @@
         <button onclick="check(this)">the</button>
     </div>
 
-    <div class="question" hidden>
-        <h2>Who wrote the Declaration of Independence?</h2>
-    
-        <button onclick="check(this)">Benjamin Franklin</button>
-        <button onclick="check(this)">George Washington</button>
-        <button onclick="check(this)">John Adams</button>
-        <button onclick="check(this)" class="correct">Thomas Jefferson</button>
+    <div id="restart">
+        <button class="restart" hidden>
+            <a href="./index.html">Restart</a>
+        </button>
     </div>
 
     <div id="scoreboard">0</div>
+    </div>
 
     <script>
-        //current.hidden = false  
+        //current.hidden = false 
+        function startQuiz() {
+            let bell = document.getElementById("school-bell");
+            bell.play(); 
+
+            document.getElementById("start-screen").style.display = "none"; 
+            document.getElementById("quiz-content").style.display = "block";
+        }
         function check(button){
 
             let question = button.closest(".question");
@@ -186,7 +268,7 @@
                 scoreboard.textContent++;
             } else{
                 button.style.color = "red"
-                //button.style.color = "white"
+                scoreboard.textContent--;
             } 
 
             if (scoreboard.textContent <= 2){
@@ -212,11 +294,13 @@
             console.log(questions.length);
             //end.hidden = true;
 
-            questions[current].hidden = true
+            questions[current].style.display = "none";
             current++;
             
             if(questions.length == current){
-                end.textContent = "Quiz complete! Your grade: "
+                end.textContent = "Quiz complete! Your grade: ";
+                document.querySelector(".restart").style.display = "block"; // Show restart button
+                
 
             if (scoreboard.textContent <= 2){
                 grade.textContent = "Kindergarten...maybe you miss clicked..."
